@@ -23,7 +23,7 @@ var app = function(app) {
 		p.main.addChild(textContainer);
 		
 		var  labelText = "Don't Swap or he will be Angry";
-		var introText = new zim.Label(labelText, 40, "arial", "green");
+		var introText = new zim.Label(labelText, 45, "arial", "green");
 		console.log (labelText);
 		textContainer.addChild(introText);
 		
@@ -54,13 +54,15 @@ var app = function(app) {
 		infoBacking.setBounds(0,0,stageW,stageH);
 		p.info.addChild(infoBacking);
 		
+		
+		
 		var hulk = p.info.hulk = new createjs.Container();
         p.info.addChild(hulk);
-        hulk.scaleX =1;
-        hulk.scaleY = 1;
+        hulk.scaleX =2;
+        hulk.scaleY = 2;
 
         var hulkImg = new createjs.Bitmap("images/hulk.png");
-        hulk.x = frame.stageW/2;
+        hulk.x = frame.stageW/4;
         hulk.y = frame.stageH/6;
         hulk.addChild(hulkImg);
 		p.info.addChild(hulk);
@@ -71,7 +73,7 @@ var app = function(app) {
 		p.info.addChild(textContainer);
 		
 		var  labelText = "I will find you and Kill you!";
-		var introText = new zim.Label(labelText, 25, "arial", "orange");
+		var introText = new zim.Label(labelText, 35, "arial", "orange");
 		console.log (labelText);
 		textContainer.addChild(introText);
 		
@@ -98,7 +100,7 @@ var app = function(app) {
         human.y = frame.stageH/6;
         human.addChild(humanImg);
 		p.main.addChild(human);
-		
+			
 		var textContainer = p.main.textContainer = new createjs.Container();
 		textContainer.x = 50;
 		textContainer.y = 50;
@@ -129,11 +131,11 @@ var app = function(app) {
 			
 		var hulk = p.info.hulk = new createjs.Container();
         p.info.addChild(hulk);
-        hulk.scaleX =1;
-        hulk.scaleY = 1;
+        hulk.scaleX =2;
+        hulk.scaleY = 2;
 
         var hulkImg = new createjs.Bitmap("images/hulk.png");
-        hulk.x = frame.stageW/2;
+        hulk.x = frame.stageW/4;
         hulk.y = frame.stageH/6;
         hulk.addChild(hulkImg);
 		p.info.addChild(hulk);
@@ -144,7 +146,7 @@ var app = function(app) {
 		p.info.addChild(textContainer);
 		
 		var  labelText = "I will find you and Kill you!";
-		var introText = new zim.Label(labelText, 25, "arial", "orange");
+		var introText = new zim.Label(labelText, 35, "arial", "orange");
 		console.log (labelText);
 		textContainer.addChild(introText);
 				

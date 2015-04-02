@@ -12,6 +12,21 @@ var app = new function(app){
 			console.log("home");	
 		}
 	}
+	app.makeNav = function(vP, vPages, hP, hPages){
+		var count = 0;
+		vP.main.human.on("click", function(e) {
+			count += 1 ;
+			console.log (count);
+			
+			if (count == 5) {
+				vPages.go(vP.info,"down");
+				count = 0;
+				stage.update();
+			}
+			
+		});
+				
 	
+	}
 	return app;	
 }(app || {});

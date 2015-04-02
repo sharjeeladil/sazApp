@@ -67,7 +67,7 @@ frame.on("ready", function() {
 	
 	// left, right, up, down
 	var vPages = new zim.Pages(stage,[
-		{page:vP.main,  swipe:[null, null, vP.info, vP.info]},
+		{page:vP.main,  swipe:[null, null, null, null]},
 		{page:vP.info,  swipe:[null, null, vP.main, vP.main]}
 	], "slide", 500
 	);
@@ -75,7 +75,7 @@ frame.on("ready", function() {
 	
 	
 	//app.makeHotSpots(hP, hPages);	
-	
+	app.makeNav(vP, vPages, hP, hPages);	
 	
 
 	// put resizing code in here (scaling="full" only)

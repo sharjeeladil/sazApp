@@ -140,6 +140,12 @@ var app = function(app) {
         hulk.addChild(hulkImg);
 		p.info.addChild(hulk);
 		
+		/*hulkImg.on("click", function() {
+			createjs.Tween.get(hulkImg)
+			.to({x:frame.stageW/6}, 200);
+			.to({x:frame.stageW/4}, 200);
+		});*/
+		
 		var textContainer = p.info.textContainer = new createjs.Container();
 		textContainer.x = 50;
 		textContainer.y = 50;

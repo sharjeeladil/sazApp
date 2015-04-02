@@ -135,8 +135,8 @@ var app = function(app) {
         hulk.scaleY = 2;
 
         var hulkImg = new createjs.Bitmap("images/hulk.png");
-        hulk.x = frame.stageW/4;
-        hulk.y = frame.stageH/6;
+        hulk.x = frame.stageW/2;
+        hulk.y = frame.stageH/2;
         hulk.addChild(hulkImg);
 		p.info.addChild(hulk);
 		

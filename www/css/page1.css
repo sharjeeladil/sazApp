@@ -1,0 +1,122 @@
+/*------------------------------------------------------*/
+/*		default media query: < 350px					*/
+/* 											 			*/
+/*------------------------------------------------------*/
+.content-wrapper{
+    border-left: none;
+    border-right: none;
+}
+.content-item {
+  	color: transparent; 
+  	cursor: pointer;
+  	height: 4em;
+}
+.content-item span {
+	font-size: 1em;
+	font-family:  'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	font-weight: bold;
+	padding-left: 1em;
+	position: relative;
+  	top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.moodName{
+	float:left;
+}
+.checkmark{
+ 	border-style: solid;
+    border-width: 0.15em;
+    height: 1em;
+    border-radius: 0.75em;
+    float: right;
+    margin-right: 2em;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.bottom-player {
+  	margin: 0 auto;
+  	text-align: center;
+}
+#ANGRY {
+	background-color: #ef4857;
+
+}
+#WARM {
+	background-color: #f79364;
+
+}
+#FANTASY {
+	background-color: #fccb64;
+
+}
+#HOPE {
+	background-color: #f9ef69;
+
+}
+#SOFT {
+	background-color: #d5e277;
+
+}
+#PEACE {
+	background-color: #83c889;
+
+}
+
+#CURIOUS {
+	background-color: #addccd;
+
+}
+#play {
+	height: 4em;
+	width: 4em;
+	overflow: hidden;
+	background-color: transparent;
+	background-image: url("../images/play2.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	margin: auto;
+	margin-top: 1em;
+}
+/*------------------------------------------------------*/
+/*					> 350px width 						*/
+/*------------------------------------------------------*/
+@media screen and (min-width:350px){
+	.content-item{
+		height: 11vh;
+	}
+	.bottom-player {
+		height: 11vh;
+		bottom: 0;
+	}
+	#play{
+		margin-top: 2em;
+	}
+}
+/*------------------------------------------------------*/
+/*					> 700px for iPad Mini 				*/
+/*------------------------------------------------------*/
+@media screen and (min-width:700px){
+	#play{
+		bottom: 3%;
+		width: 6em;
+		height: 6em;
+	}
+	.content-item span {
+		font-size: 2em;
+		padding-left: 1em;
+	}
+	.moodName{
+		float:left;
+	}
+}
+/*------------------------------------------------------*/
+/*					> 1100px for desktop	 			*/
+/*------------------------------------------------------*/
+@media screen and (min-width: 1000px){
+}

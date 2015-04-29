@@ -1,0 +1,231 @@
+/* Elephant.fm */
+/* STYLESHEET FOR player PAGE */
+/*------------------------------------------------------*/
+/*      default media query: < 350px                    */
+/*                                                      */
+/*------------------------------------------------------*/
+#mainPlayerWrapper {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+}
+#headline {
+    color: transparent;
+}
+#playbg {
+    margin: auto;
+    height:40vh;
+    width: 40vh;
+    background-image: url("../images/cd.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-color: #99ccff;
+    border-radius: 50%;
+    position: relative;
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+.trackTitle {
+    font-size:20px;
+    padding-top:35px;
+    font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+#background{
+    z-index:-1;
+    background-color:#A0A0A0;
+    position:absolute;
+    margin-top:4em;
+    margin-bottom:50px;
+    width:100%;
+    height:75%;
+}
+#stop-button {
+    bottom: 30px;
+    left:20%;
+    float: left;
+    position: absolute;
+}
+#stop {
+    color:transparent;
+    padding-bottom: 25px;
+    padding-right: 30px;
+    margin-left:-20%;
+    background-color: transparent;
+    background-image: url("../images/stop2.png");
+    background-size: 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+#play-button {
+    bottom: 30px;
+    left:43%;
+    float: left;
+    position: absolute;
+}
+#play {
+    color: transparent;
+    padding-bottom: 25px;
+    padding-right: 30px;
+    margin-top: 10px;
+    overflow:hidden;
+    background-color: transparent;
+    background-image: url("../images/play2.png");
+    background-size: 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    bottom: -20px;
+    left:20%;
+    float: left;
+    position: absolute;
+}
+#pause-button {
+    bottom: 30px;
+    left:45%;
+    float: left;
+    position: absolute;
+}
+#pause {
+    color: transparent;
+    padding-bottom: 50px;
+    padding-right: 50px;
+    margin-top: 10px;
+    overflow:hidden;
+    background-color: transparent;
+    background-image: url("../images/pause2.png");
+    background-size: 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    bottom: -45px;
+    left:20%;
+    float: left;
+    position: absolute;
+}
+#next-button {
+    bottom: 30px;
+    left:65%;
+    float: left;
+    position: absolute;
+}
+#next {
+    color:transparent;
+    padding-bottom: 25px;
+    padding-left: 30px;
+    margin-left:20%;
+    background-color: transparent;
+    background-image: url("../images/next2.png");
+    background-size: 50px;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+/*------------------------------------------------------*/
+/*                  > 350px width                       */
+/*------------------------------------------------------*/
+@media screen and (min-width:350px){
+    #stop-button {
+        bottom: 40px;
+    }
+    #play-button {
+        bottom: 40px;
+    }
+    #pause-button {
+        bottom: 40px;
+        left:43%;
+    }
+    #next-button {
+        bottom: 40px;
+    }
+    .trackTitle {
+    padding-top:35px;
+    font-size:25px;
+    }
+    #background{
+    margin-top:11vh;
+    }   
+}
+/*------------------------------------------------------*/
+/*                  > 700px for iPad Mini               */
+/*------------------------------------------------------*/
+@media screen and (min-width:700px){
+    #stop {
+    padding-bottom: 40px;
+    padding-right: 50px;
+    background-size: 70px;
+    bottom: -15px;
+    left:20%;
+    float: left;
+    position: absolute;
+    }
+   #play {
+    padding-bottom: 40px;
+    padding-right: 50px;
+    overflow:hidden;
+    background-size: 70px;
+    bottom: -15px;
+    left:20%;
+    }
+    #pause {
+    padding-bottom: 40px;
+    background-size: 70px;
+    bottom: -15px;
+    }
+    #next {
+    padding-bottom: 40px;
+    padding-left: 50px;
+    background-size: 70px;
+    bottom: -15px;
+    left:65%;
+    float: left;
+    position: absolute;
+    }
+    .trackTitle {
+    font-size:30px;
+    }
+    #background{
+    margin-top:11vh;
+    }
+}
+/*------------------------------------------------------*/
+/*                  > 1100px for desktop                */
+/*------------------------------------------------------*/
+@media screen and (min-width:1000px){
+    #stop {
+    padding-bottom: 40px;
+    padding-right: 55px;
+    background-size: 90px;
+    }
+   #play {
+    padding-bottom: 40px;
+    padding-right: 50px;
+    position:relative;
+    background-size: 90px;
+    }
+    #pause {
+    padding-bottom: 40px;
+    padding-right: 50px;
+    margin-top: 10px;
+    position:relative;
+    background-size: 90px;
+    }
+    #next {
+    padding-bottom: 40px;
+    padding-left: 55px;
+    background-size: 90px;
+    }
+    #background{
+    margin-top:11vh;
+    margin-bottom:50px;
+    height:77%;
+    }
+    .trackTitle {
+    padding-top:35px;
+    font-size:40px;
+    }
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- 
+    SoundCloud player - Elephant.fm
+    April 2015
+-->
+<html>
+    <head>
+        <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+        <title>Elephant.fm</title>    
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <script src="js/jquery-min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <script src="js/sdk.js"></script> <!-- SoundCloud JavaScript SDK -->
+        <script src="js/scp.js"></script> <!--initialize SoundCloud with client_id  -->
+        <link rel="stylesheet" href="css/reset.css" type="text/css" />
+        <link rel="stylesheet" href="css/global.css" type="text/css" />
+        <link rel="stylesheet" href="css/page2.css" type="text/css" />
+    </head>
+    <body>
+        <div id="background"></div>
+        <header>
+            <div class="header-wrapper">
+                <a href="index.html"><div class="logo"></div></a>
+                <a href="#" id="hamburger"></a>
+            </div>
+        </header>
+        <div id="info" style="display:none;">
+            <h2>About</h2>
+            <p>Welcome to Elephant.fm! Select one or multiple colors that suit your mood, and be tuned out.</p>
+            <h2>Our Developer Team</h2>
+            <p><a href="http://www.arthurshen.com">Arthur Shen</a>&hearts;@arthursh3n</p><br/>
+            <p><a href="http://www.barneyshum.com">Barney Shum</a>&hearts;@Chuen0112</p><br/>
+            <p><a href="cynthiabao.com">Cynthia Bao</a>&hearts;@cynthia_bao</p><br/>
+            <p><a href="http://www.sharjeelzadah.com">Sharjeel Zadah</a>&hearts;@sharjeeladil</p><br/>
+            <p><a href="http://interactive.susanqu.com">Susan Qu</a>&hearts;@SusanQu_Studio</p>
+        </div>
+        <div id="mainPlayerWrapper">
+            <h3 id="headline">SoundCloud Player</h3>
+            <div id = "playbg"></div>
+            <div class="music-player">
+                <h4 class="trackTitle">Current track</h4>
+            </div>
+            
+        </div>
+
+        <div class="bottom-player">
+            <div id="stop-button">
+                <a href="#" id="stop">Stop</a>
+            </div>
+            <div id="play-button">
+                <a href="#" id="play">Play</a>
+                <a href="#" id="pause" style="display:none;">Pause</a>
+            </div>
+            <div id="next-button">
+                <a href="#" id="next">Next</a>
+            </div>
+        </div>
+
+    <script type="text/javascript">
+        $( "#hamburger" ).click(function() {
+          $( "#info" ).slideToggle( "slow" );
+        });
+            
+        // var ifRead = [true, true, false, false, false, true, false] ;
+        var playList = [];
+
+        //console.log (genre1);
+        $(document).ready (function(){
+
+            function getQueryVariable(variable)
+            {
+                   var query = window.location.search.substring(1);
+                   var vars = query.split("&");
+                   for (var i=0;i<vars.length;i++) {
+                           var pair = vars[i].split("=");
+                           if(pair[0] == variable){return pair[1];}
+                   }
+                   return(false);
+            }
+
+            var genreURL = [];
+            genreURL = getQueryVariable("genre");
+        
+            var genre = new Array();
+            genre = genreURL.split(",");
+            //console.log (genre);      
+            
+            var t = 0;
+            for (var p=0;p<genre.length;p++) {
+                //console.log(genre[p]);
+                //selectGenre(genre[p]);
+                SC.get('/tracks', {genres: genre[p], limit: 50}, function(tracks){ // retrieves a list of 200 SoundCloud tracks
+                    $.merge(playList, tracks); 
+                    t++;
+                    if (t == genre.length) {
+                        playTracks(playList);
+                        //console.log (playList);
+                    }
+                });
+            }
+        }); 
+
+    function playTracks(tracks){
+        // copy tracks to trackList array
+        var trackList = [] ;    
+        for(i=0; i<tracks.length; i++){
+            trackList[i]={uri: tracks[i].uri, title: tracks[i].title, genre:tracks[i].genre};
+            //console.log (trackList[i]);
+        }
+
+        // Fisher-Yates (aka Knuth) Shuffle
+        var current = tracks.length; 
+        var temp;
+        var rand;
+
+        // Shuffle starts from the end of the trackList
+        while (current !== 0) { // While there remain elements to shuffle...
+
+            // Pick a random element less than current
+            rand = Math.floor(Math.random() * current); 
+            current -= 1; // lower current by 1
+            
+            // Swap the randomly selected element to the current location.
+            temp = trackList[current];
+            trackList[current] = trackList[rand];
+            trackList[rand] = temp;
+        }
+
+
+        // stream() saves a soundObject here for one of the tracks
+        // soundObject methods: play(), pause(), stop() 
+        var track = {}; 
+
+        var i = 0;
+        
+        stream(trackList[i].uri);
+
+        $('#play').on('click', function(event){
+            track.play();
+            $('.trackTitle').html(trackList[i].title);
+            //console.log(trackList[i].genre);
+
+            if(trackList[i].genre=="Metal"||trackList[i].genre=="metal") {
+                document.getElementById("playbg").style.backgroundColor = "#ef4857";
+            }       
+            else if(trackList[i].genre=="Piano"||trackList[i].genre=="piano") {
+                document.getElementById("playbg").style.backgroundColor = "#83c889";
+            }
+            else if(trackList[i].genre=="Ambient"||trackList[i].genre=="fccb64") {
+                document.getElementById("playbg").style.backgroundColor = "#d5e277";
+            }
+            else if(trackList[i].genre=="Pop"||trackList[i].genre=="pop") {
+                document.getElementById("playbg").style.backgroundColor = "#f79364";
+            }
+            else if(trackList[i].genre=="Trance"||trackList[i].genre=="trance") {
+                document.getElementById("playbg").style.backgroundColor = "#fccb64";
+            }
+            else if(trackList[i].genre=="Classical"||trackList[i].genre=="classical") {
+                document.getElementById("playbg").style.backgroundColor = "#f9ef69";
+            }
+            else if(trackList[i].genre=="Jazz"||trackList[i].genre=="jazz") {
+                document.getElementById("playbg").style.backgroundColor = "#addccd";
+            }
+            // Code for Chrome, Safari and Opera
+            document.getElementById("playbg").style.WebkitAnimationPlayState = "running";
+            // Standard syntax
+            document.getElementById("playbg").style.animationPlayState = "running";
+            $('#pause').show();
+            $('#play').hide();
+        });
+
+        $('#pause').on('click', function(event){
+            track.pause();
+            console.log(trackList[i].genre);
+            // Code for Chrome, Safari and Opera
+            document.getElementById("playbg").style.WebkitAnimationPlayState = "paused";
+            // Standard syntax
+            document.getElementById("playbg").style.animationPlayState = "paused";
+            $('#pause').hide();
+            $('#play').show();
+        });
+
+        $('#stop').on('click', function(event){
+            track.stop();
+            console.log(trackList[i].genre);
+            // Code for Chrome, Safari and Opera
+            document.getElementById("playbg").style.WebkitAnimationPlayState = "paused";
+            // Standard syntax
+            document.getElementById("playbg").style.animationPlayState = "paused";
+            $('#pause').hide();
+            $('#play').show();
+        });
+
+        $('#next').on('click', function(event){
+            track.stop();
+            //console.log(trackList[i].genre);
+            if(trackList[i].genre=="Metal"||trackList[i].genre=="metal") {
+                document.getElementById("playbg").style.backgroundColor = "#ef4857";
+            }       
+            else if(trackList[i].genre=="Piano"||trackList[i].genre=="piano") {
+                document.getElementById("playbg").style.backgroundColor = "#83c889";
+            }
+            else if(trackList[i].genre=="Ambient"||trackList[i].genre=="fccb64") {
+                document.getElementById("playbg").style.backgroundColor = "#d5e277";
+            }
+            else if(trackList[i].genre=="Pop"||trackList[i].genre=="pop") {
+                document.getElementById("playbg").style.backgroundColor = "#f79364";
+            }
+            else if(trackList[i].genre=="Trance"||trackList[i].genre=="trance") {
+                document.getElementById("playbg").style.backgroundColor = "#fccb64";
+            }
+            else if(trackList[i].genre=="Classical"||trackList[i].genre=="classical") {
+                document.getElementById("playbg").style.backgroundColor = "#f9ef69";
+            }
+            else if(trackList[i].genre=="Jazz"||trackList[i].genre=="jazz") {
+                document.getElementById("playbg").style.backgroundColor = "#addccd";
+            }
+            // Code for Chrome, Safari and Opera
+            document.getElementById("playbg").style.WebkitAnimationPlayState = "running";
+            // Standard syntax
+            document.getElementById("playbg").style.animationPlayState = "running";
+            playNext();
+        });
+
+        function playNext(){
+            i++;
+            if(i<trackList.length){
+                stream(trackList[i].uri);
+                if(trackList[i].genre=="Metal"||trackList[i].genre=="metal") {
+                    document.getElementById("playbg").style.backgroundColor = "#ef4857";
+                }       
+                else if(trackList[i].genre=="Piano"||trackList[i].genre=="piano") {
+                    document.getElementById("playbg").style.backgroundColor = "#83c889";
+                }
+                else if(trackList[i].genre=="Ambient"||trackList[i].genre=="fccb64") {
+                    document.getElementById("playbg").style.backgroundColor = "#d5e277";
+                }
+                else if(trackList[i].genre=="Pop"||trackList[i].genre=="pop") {
+                    document.getElementById("playbg").style.backgroundColor = "#f79364";
+                }
+                else if(trackList[i].genre=="Trance"||trackList[i].genre=="trance") {
+                    document.getElementById("playbg").style.backgroundColor = "#fccb64";
+                }
+                else if(trackList[i].genre=="Classical"||trackList[i].genre=="classical") {
+                    document.getElementById("playbg").style.backgroundColor = "#f9ef69";
+                }
+                else if(trackList[i].genre=="Jazz"||trackList[i].genre=="jazz") {
+                    document.getElementById("playbg").style.backgroundColor = "#addccd";
+                }
+                // Code for Chrome, Safari and Opera
+                document.getElementById("playbg").style.WebkitAnimationPlayState = "running";
+                // Standard syntax
+                document.getElementById("playbg").style.animationPlayState = "running";
+                
+                $('.trackTitle').html(trackList[i].title);
+                track.play();
+                $('#pause').show();
+                $('#play').hide();
+            }
+
+            if(i==trackList.length-1){
+                $('#next').hide();
+            }            
+        }
+
+        function stream(uri){           
+            SC.stream(uri,
+                 // SC.stream prepares a soundManager2 sound object
+                {onfinish: function(){playNext();}}, //option onfinish: call function playNext() once track is done playing
+                function(sound){
+                    track = sound;
+                    if(i==0){
+                        playFirstTrack();
+                    }
+                } // store the sound object for the SoundCloud track in the global var track
+                
+            );
+        }
+
+        function playFirstTrack(){
+        
+            if(trackList[i].genre=="Metal"||trackList[i].genre=="metal") {
+                document.getElementById("playbg").style.backgroundColor = "#ef4857";
+            }       
+            else if(trackList[i].genre=="Piano"||trackList[i].genre=="piano") {
+                document.getElementById("playbg").style.backgroundColor = "#83c889";
+            }
+            else if(trackList[i].genre=="Ambient"||trackList[i].genre=="fccb64") {
+                document.getElementById("playbg").style.backgroundColor = "#d5e277";
+            }
+            else if(trackList[i].genre=="Pop"||trackList[i].genre=="pop") {
+                document.getElementById("playbg").style.backgroundColor = "#f79364";
+            }
+            else if(trackList[i].genre=="Trance"||trackList[i].genre=="trance") {
+                document.getElementById("playbg").style.backgroundColor = "#fccb64";
+            }
+            else if(trackList[i].genre=="Classical"||trackList[i].genre=="classical") {
+                document.getElementById("playbg").style.backgroundColor = "#f9ef69";
+            }
+            else if(trackList[i].genre=="Jazz"||trackList[i].genre=="jazz") {
+                document.getElementById("playbg").style.backgroundColor = "#addccd";
+            }
+            // Code for Chrome, Safari and Opera
+            document.getElementById("playbg").style.WebkitAnimationPlayState = "running";
+            // Standard syntax
+            document.getElementById("playbg").style.animationPlayState = "running";
+            
+            $('.trackTitle').html(trackList[i].title);
+            track.play();
+            $('#pause').show();
+            $('#play').hide();
+                     
+        }
+
+
+    } // end playTracks()
+    </script>
+    </body>
+</html>

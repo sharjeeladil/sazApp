@@ -1,145 +1,236 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8" />
-<title>Don't make him ANGRY!</title> 
+<html lang="en">
+	<head>
+		<title>Elephant.fm</title>
+	    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name=viewport content="width=device-width, initial-scale=1">
+	    <meta name="description" content="a music player based on your mood and your color, what's your color for today?" />
+	    <meta name="keywords" content="music player" />    
+	    <meta name="author" content="Arthur, Barney, Cynthia, Sharjeel, Susan" />
+	    <meta name="copyright" content="elephant.fm" />
 
-<!-- for CreateJS and ZIMjs http://zimjs.com - free to modify - Dan Zen 2015 -->
-<!-- see http://zimjs.com/templates for more templates and meta tags -->
+	    <!-- for Facebook -->          
+	    <meta property="og:title" content="" />
+	    <meta property="og:type" content="website" />
+	    <!--<meta property="og:image" content="url_to-image_for_facebook" />-->
+	    <!--<meta property="og:url" content="url_of_app" />-->
+	    <meta property="og:description" content="" />
 
-<script>var zon = true; // true for comments from zim code</script>
-<script src="http://d309knd7es5f10.cloudfront.net/zim_1.4.js"></script><!-- take off _min to see code -->
-<script src="http://code.createjs.com/createjs-2014.12.12.min.js"></script> 
-<!-- or can go to zimjs.com and createjs.com for individual modules -->
+	    <!-- for Twitter -->          
+	    <meta name="twitter:card" content="summary" />
+	    <meta name="twitter:title" content="" />
+	    <meta name="twitter:description" content="" />
+	    <!--<meta name="twitter:image" content="url_to-image" />-->
 
-<script src="js/view.js"></script>
-<script src="js/controller.js"></script>
+	    <!-- for Apple -->
+	    <meta name="viewport" content="user-scalable=no, minimal-ui" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+	    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-<style>
-	body {margin:0px; padding:0px; background-color:#000;}
-	#myCanvas {position:absolute; background-color:#000000;}
-</style>
+        <script src="js/jquery-min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+	    <!-- stylesheets -->
+	    <link rel="stylesheet" href="css/reset.css" type="text/css" />
+	    <link rel="stylesheet" href="css/global.css" type="text/css" />
+	    <link rel="stylesheet" href="css/page1.css" type="text/css" />
+	    
+	</head>
 
-<script>
+	<body>
+		<header>
+			<div class="header-wrapper">
+				<a href="index.html"><div class="logo"></div></a>
+				<a href="#" id="hamburger"></a>
+			</div>
+		</header>
+		<div id="info" style="display:none;">
+			<h2>About</h2>
+            <p>Welcome to Elephant.fm! Select one or multiple colors that suit your mood, and be tuned out.</p>
+            <h2>Our Developer Team</h2>
+            <p><a href="http://www.arthurshen.com">Arthur Shen</a>&hearts;@arthursh3n</p><br/>
+            <p><a href="http://www.barneyshum.com">Barney Shum</a>&hearts;@Chuen0112</p><br/>
+            <p><a href="cynthiabao.com">Cynthia Bao</a>&hearts;@cynthia_bao</p><br/>
+            <p><a href="http://www.sharjeelzadah.com">Sharjeel Zadah</a>&hearts;@sharjeeladil</p><br/>
+            <p><a href="http://interactive.susanqu.com">Susan Qu</a>&hearts;@SusanQu_Studio</p>
+            <h2>Thanks</h2>
+            <p><a href="http://www.soundcloud.com"><img src="images/soundcloud.png" /></a></p>
+        </div>
+		<div class="content-wrapper">
+			<div id="content-items">
+			</div>
+		</div>
+		<div class="bottom-player">
+			<div id="play-button">
+				<input id="play" type="submit" value="" onclick="getGenres()" />
+			</div>
+		</div>
 
-// SCALING OPTIONS
-// "none"		sets canvas and stage to dimensions and does not scale if window changes
-// "fit"		sets canvas and stage to dimensions and scales to fit inside window size
-// "outside"	sets canvas and stage to dimensions and scales to fit outside window size
-// "full"		sets canvas and stage to window size (canvas is actually set to screen size)
+		<script>
+			$( "#hamburger" ).click(function() {
+	          $( "#info" ).slideToggle( "slow" );
+	        });
+			var names = [];
+			var contentName = [];
+			var genres = [];
+			var textnode = [];
+			var checkmarks =[];
+			var checkmarksButton = [];
+			var spans = [];
+			var checkText = [];
+			var checkSpans = [];
 
-var scaling = "full"; // full automatically sets width and height to window size
-var width = null;
-var height = null;
-var stage;
-var stageW;
-var stageH;
+			names = ["ANGRY","WARM","FANTASY","HOPE","SOFT","PEACE","CURIOUS"];
+			genres = ["metal","pop","trance","classical","ambient","piano","jazz"];
+			for(var i=0; i<names.length; i++){
+				contentName[i] = document.createElement('div');
+				contentName[i].setAttribute('class', 'content-item');
+				contentName[i].setAttribute('id', names[i]);
 
-var frame = new zim.Frame(scaling, width, height); 
-frame.on("ready", function() {	
-	zog("ready from ZIM Frame");
-	
-	stage = frame.stage;
-	stageW = frame.stageW;
-	stageH = frame.stageH;
-	
-	var hLayoutManager = new zim.LayoutManager();
-	var vLayoutManager = new zim.LayoutManager();
-	var gridManager = new zim.GridManager();
-	var guideManager = new zim.GuideManager();
-	
-	
-	var hP = app.makeHorizontalPages(hLayoutManager, gridManager, guideManager);
-	var vP = app.makeVerticalPages(vLayoutManager, gridManager, guideManager);
+				textnode[i] = document.createTextNode(names[i]); // Create a text node
+				spans[i] = document.createElement('span');
+				spans[i].appendChild(textnode[i]);
+				spans[i].setAttribute('class', 'moodName');
+				contentName[i].appendChild(spans[i]);
 
-	//stage.addChild(hP.main);
-	//stage.addChild(hP.info);
-	//hP.info.x = 100;
-	
-	// left, right, up, down
-	var hPages = new zim.Pages(stage,[
-		{page:hP.main,  swipe:[hP.info, hP.info, null, null]},
-		{page:hP.info,  swipe:[hP.main, hP.main, null, null]}
-	], "slide", 500
-	);
-	//stage.addChild(hPages);
-	
-	// left, right, up, down
-	var vPages = new zim.Pages(stage,[
-		{page:vP.main,  swipe:[null, null, null, null]},
-		{page:vP.info,  swipe:[null, null, vP.main, vP.main]}
-	], "slide", 500
-	);
-	//stage.addChild(vPages);
-	
-	
-	//app.makeHotSpots(hP, hPages);	
-	app.makeNav(vP, vPages, hP, hPages);	
-	
+				checkmarks[i] = document.createElement('span');
+				checkmarks[i].setAttribute('class','checkmark');
+				contentName[i].appendChild(checkmarks[i]);
 
-	// put resizing code in here (scaling="full" only)
-	frame.on("resize", function(e) {
-		stageW = frame.stageW;
-		stageH = frame.stageH;
-		
-		zim.scaleTo(hP.info, stage, 100, 100, "both");
-		zim.scaleTo(vP.info, stage, 100, 100, "both");
-		
-		hLayoutManager.resize();
-		vLayoutManager.resize();
-		gridManager.resize();
-		guideManager.resize();
+				//checkText[i] = document.createTextNode(""); // Create a text node
+				// checkSpans[i] = document.createElement('span');
+				// checkmarks[i].setAttribute('class','checkmark');
+				// checkSpans[i].appendChild(checkSpans[i]);
 				
-		stage.update();
-	}); // end of resizing
-	
+				//checkmarks[i].appendChild(checkSpans[i]);
 
-	// put orientation change code in here
-	frame.on("orientation", orientate);
+				document.getElementById("content-items").appendChild(contentName[i]);
+			}
+			//reading the genres
+			var ifRead = [];
+			for(var i=0;i<names.length;i++){
+				ifRead[i]=false;
+			}
 
-	function orientate(e) {	
-	
-		zog(frame.orientation);
-		
-		if (frame.orientation == "horizontal") {
-			
-			hP.main
-			hP["main"]
-			
-			hPages.go( hP[ vPages.page.name ] , null, "none");
-			
-			stage.addChild(hPages);
-			hPages.enable();
-			hLayoutManager.enable();			
-			stage.removeChild(vPages);
-			vPages.disable();
-			vLayoutManager.disable();
-			
-		} else {
-			
-			vPages.go( vP[ hPages.page.name ] , null, "none");
-			
-			stage.addChild(vPages);
-			vPages.enable();	
-			vLayoutManager.enable();		
-			stage.removeChild(hPages);
-			hPages.disable();
-			hLayoutManager.disable();
-		}
-			
-		stage.update();
-	}; // end of orientation
-	
-	orientate();
-	
-	stage.update();	
-	
-}); // end of ready
-</script>
-</head>
+			var angry = document.getElementById("ANGRY");
+		    angry.addEventListener('click',check1,true);
 
-<body>
-<!-- canvas with id="myCanvas" is made by zim Frame -->
-</body>
+		    function check1(e){
+		        if(!ifRead[0]) {
+		            ifRead[0] = true;      
+		                document.getElementById("ANGRY").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("ANGRY").style.color = "transparent";
+		            ifRead[0] = false;
+		        }
+		    }
+		    var warm = document.getElementById("WARM");
+		    warm.addEventListener('click',check2,true);
+
+		    function check2(e){
+		        if(!ifRead[1]) {
+		            ifRead[1] = true;      
+		                document.getElementById("WARM").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("WARM").style.color = "transparent";
+		            ifRead[1] = false;
+		        }
+		    }
+		    var fantasy = document.getElementById("FANTASY");
+		    fantasy.addEventListener('click',check3,true);
+
+		    function check3(e){
+		        if(!ifRead[2]) {
+		            ifRead[2] = true;      
+		                document.getElementById("FANTASY").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("FANTASY").style.color = "transparent";
+		            ifRead[2] = false;
+		        }
+		    }
+		    var hope = document.getElementById("HOPE");
+		    hope.addEventListener('click',check4,true);
+
+		    function check4(e){
+		        if(!ifRead[3]) {
+		            ifRead[3] = true;      
+		                document.getElementById("HOPE").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("HOPE").style.color = "transparent";
+		            ifRead[3] = false;
+		        }
+		    }
+		    var soft = document.getElementById("SOFT");
+		    soft.addEventListener('click',check5,true);
+
+		    function check5(e){
+		        if(!ifRead[4]) {
+		            ifRead[4] = true;      
+		                document.getElementById("SOFT").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("SOFT").style.color = "transparent";
+		            ifRead[4] = false;
+		        }
+		    }
+		    var peace = document.getElementById("PEACE");
+		    peace.addEventListener('click',check6,true);
+
+		    function check6(e){
+		        if(!ifRead[5]) {
+		            ifRead[5] = true;      
+		                document.getElementById("PEACE").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("PEACE").style.color = "transparent";
+		            ifRead[5] = false;
+		        }
+		    }
+		    var curious = document.getElementById("CURIOUS");
+		    curious.addEventListener('click',check7,true);
+
+		    function check7(e){
+		        if(!ifRead[6]) {
+		            ifRead[6] = true;      
+		                document.getElementById("CURIOUS").style.color = "#fff";
+		        }
+		        else {
+		            document.getElementById("CURIOUS").style.color = "transparent";
+		            ifRead[6] = false;
+		        }
+		    }
+		    function getGenres() {
+		    	var checkedGenres = [];
+
+		    	var onlyChecked = [];
+		    	var countChecked = 0;
+		    	for(i=0;i<names.length;i++){
+		    		if(ifRead[i]){
+		    			checkedGenres[i] = names[i];
+		    			onlyChecked[countChecked]=genres[i];
+		    			countChecked++;
+		    		}
+		    	}
+			    //alert("You chose: "+onlyChecked+" your music is playing now.");
+			    window.location.href = 'page2.html?genre=' + onlyChecked + '' ;
+			}
+
+		</script>
+	</body>
 </html>
+
+
+
+
+
+
+
+

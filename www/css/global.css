@@ -1,0 +1,111 @@
+/* Elephant.fm */
+/* STYLESHEET FOR FRONT PAGE */
+/*------------------------------------------------------*/
+/*		default media query: < 350px					*/
+/* 											 			*/
+/*------------------------------------------------------*/
+.header-wrapper {
+	height:4em;
+}
+.logo {
+  background-image: url("../images/logo2.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 0.5em;
+  width: 4em;
+  height: 4em;
+  position: absolute;
+  left: 1%;
+}
+#hamburger {
+  background-image: url("../images/hamburger2.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 0.5em;
+  width: 4em;
+  height: 4em;
+  position: absolute;
+  right: 1%;
+}
+#info {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    background-color: #fff;
+    min-height:100vh;
+    position:relative;  
+    text-align: center;
+}
+#info h2 {
+	font-family: EncodeSansCompressed-Thin;
+	font-size: 1.5em;
+	padding-top: 0.5em;
+	padding-bottom: 1em;
+}
+#info p {
+	font-family: EncodeSansCompressed-Thin;
+	font-size: 1.2em;
+	padding-bottom: 0.2em;
+	margin: auto;
+	border-bottom: solid 0.1em grey;
+
+}
+#info a {
+	font-family: EncodeSansCompressed-Thin;
+	cursor: pointer;
+}
+.bottom-player {
+	height: 80px;
+	bottom: 0;
+}
+/*------------------------------------------------------*/
+/*					> 350px width 						*/
+/*------------------------------------------------------*/
+@media screen and (min-width:350px){
+	.header-wrapper {
+		height: 11vh;
+	}
+	.logo{
+		width: 4em;
+		height: 4em;
+	}
+	.hamburger{
+		width: 4em;
+		height: 4em;
+	}
+	#info h2 {
+		font-size: 1.8em;
+		font-family: EncodeSans-Black;
+	}
+	#info p {
+		font-size: 1.5em;
+	}
+	#info a {
+		
+	}
+}
+
+/*------------------------------------------------------*/
+/*					> 700px for iPad Mini 				*/
+/*------------------------------------------------------*/
+@media screen and (min-width:700px){
+	.logo{
+		left:2%;
+		top: 2%;
+		width: 5em;
+		height: 5em;
+	}
+	#hamburger{
+		right:2%;
+		top: 2%;
+		width: 5em;
+		height: 5em;
+	}
+}
+
+/*------------------------------------------------------*/
+/*					> 1100px for deskto		 			*/
+/*------------------------------------------------------*/
+@media screen and (min-width: 1000px){
+}
+
